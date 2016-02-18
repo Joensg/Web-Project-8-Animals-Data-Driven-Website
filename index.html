@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Task List - Landing Page</title>
+     
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/handlebars-v3.0.3.js"></script>
+     
+      <!-- These are our javascript files.
+           AnimalsData.js contains the data
+           myscript.js is the code -->
+      <script src="js/AnimalsData.js"> </script>
+      <script src="js/myscript.js"> </script>
+
+      <link href="css/bootstrap.css" rel="stylesheet">
+      <link href="css/mystyles.css" rel="stylesheet">
+
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+ </head>
+ 
+ <body>
+     
+     <nav class="navbar navbar-default">
+         <div class="container-fluid">
+             
+             <!-- start collapsed navbar -->
+             <div class="navbar-header">
+                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main_navbar" aria-expanded="false">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span></button>
+             </div>
+             <!-- / collapsed navbar -->
+             
+             <!-- start un-collapsed navbar -->
+             <div class="collapse navbar-collapse" id="main_navbar">
+                 <ul class="nav navbar-nav">
+                     <li class="active animals-tab"><a href="#">Animals</a></li>
+                     <li class="class-tab"><a href="#">Class</a></li>
+                     <li class="species-tab"><a href="#">Species</a></li>
+                 </ul>
+             </div>
+             <!-- / un-collapsed navbar -->
+         </div>
+     </nav>
+     
+     <div class="container">
+         <!-- the content section is empty as it will be filled
+              via javascript and templates -->
+         <div id="content"  class="container-fluid"  role="main">
+         </div>
+     </div>
+     
+     <footer>
+         <div class="container-fluid">
+             <div class="row row-footer">
+                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-1">
+                     <h5>Links</h5>
+                     <ul class="list-unstyled">
+                         <li class="animals-tab"><a href="#">Animals</a></li>
+                         <li class="class-tab"><a href="#">Class</a></li>
+                         <li class="species-tab"><a href="#">Species</a></li>
+                     </ul>
+                 </div>
+                 <div class="col-xs-12">
+                     <p style="padding:5px;"></p>
+                     <p class="text-center">Created by Joel Sequeira</p>
+                 </div>
+                 
+             </div>
+         </div>
+     </footer>
+     
+     
+     <!-- Templates -->
+     
+     <!-- template for the Animals Category View -->
+     <script id="animals-template" type="text/x-handlebars-template">
+         <div class="row">
+             <div class="col-xs-12">
+                 <h1>Category View <small>presents three classes of animals</small></h1>
+             </div>
+         </div>
+         <div class="row row-content">
+             {{#each category}}
+             <div class="col-xs-12 col-md-4"> 
+                 <div class="animals-thumbnail" data-id="{{@index}}">
+                     <div class="caption">
+                         <h2 class="text-center">{{name}}</h2>
+                     </div>
+                     <img class="crop-img img-circle center-block" src="{{animals.[0].image1}}" alt=""/>
+                 </div>
+             </div>
+             {{/each}}
+         </div>
+     </script>
+     
+     <!-- template for the Class View of a single category -->
+     <script id="class-template" type="text/x-handlebars-template">
+         <div class="row">
+             <div class="col-xs-12">
+                 <h1>Class View <small>presents four species of a class</small></h1>
+             </div>
+         </div>
+         <div class="row row-content">
+             {{#each animals}}
+             <div class="col-xs-12 bottom-buffer">
+                 <div class="species-thumbnail panel panel-info"  data-id="{{@index}}">
+                     <div class = "panel-heading">
+                         <h2 class = "panel-title customh2"><strong>{{name}} </strong><small> class : {{../name}}</small></h2>
+                     </div>
+                     <div class = "panel-body">
+                         <div class="col-sm-6">
+                             <img class="crop2x-img center-block" src="{{image1}}" alt=""/>
+                             <img class="crop2x-img center-block" src="{{image2}}" alt=""/>
+                         </div>
+                         <div class="col-sm-6">
+                             <div class="caption top-buffer">
+                                 <p>{{description}}</p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             {{/each}}
+         </div>
+     </script>
+     
+     <!-- template for the Species View of a single species -->
+     <script id="species-template" type="text/x-handlebars-template">
+         <div class="row">
+             <div class="col-xs-12">
+                 <h1>Species View <small>presents details of a single species</small></h1>
+             </div>
+         </div>
+         <div class="row row-content">
+             <div class="col-xs-12 col-md-12" data-id="{{@index}}">
+                 <div class="panel panel-info">
+                 <div class = "panel-heading">
+                     <h2>{{name}}</h2>
+                 </div>
+                 <div class = "panel-body">
+                     <div class="col-md-6">
+                         <img class="large-img center-block" src="{{image1}}" alt=""/>
+                     </div>
+                     <div class="col-md-6">
+                         <img class="large-img center-block" src="{{image2}}" alt=""/>
+                     </div>
+                     <div class="caption col-md-12 top-buffer">
+                         <p>{{description}}</p>
+                     </div>
+                 </div>
+                 </div>
+             </div>
+         </div>
+     </script>
+     
+     <!-- / Templates -->
+     
+ </body>
+</html>
